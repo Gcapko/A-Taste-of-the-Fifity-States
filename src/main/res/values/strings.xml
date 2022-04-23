@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">A Taste of the Fifty States</string>
+    <string name="start">Start</string>
+    <string name="useLocation">Use Location</string>
+    <string name="stateMessage">Choose State Below</string>
+    <string name="ourStory">Description of application and "our story"</string>
+    <string name="welcomePhotoDescription">Welcome photo that show "Recipes for all 50 states" and pictures of different foods</string>
+
+
+    <string-array name="states_names">
+
+    </string-array>
+</resources>
