@@ -9,15 +9,12 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.ResultReceiver;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,26 +23,8 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-
 
 public class MainActivity extends AppCompatActivity {
-    ArrayList<String> stateList = new ArrayList<String>();
-    ArrayList<String> recipeList = new ArrayList<String>();
-    ArrayList<String> realRecipeList = new ArrayList<String>();
-    ArrayList<String> ingredientsList = new ArrayList<String>();
-    ArrayList<String> ratingList = new ArrayList<String>();
 
     private String savedLocation = null;
     private TextView textAddress, textLatLong;
@@ -58,13 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Spinner spinner = (Spinner) findViewById(R.id.state_dropdown);
-        new JSONTask().execute("https://cdn.discordapp.com/attachments/946210413849239603/964756428067856394/test-file.txt");
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,
-                        stateList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spinner.setAdapter(adapter);
 
 
         resultReceiver = new AddressResultReceiver(new Handler());
@@ -92,67 +64,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    public class JSONTask extends AsyncTask<String, String, Integer> {
-
-        @Override
-        protected Integer doInBackground(String... strings) {
-            HttpURLConnection connection = null;
-            BufferedReader reader = null;
-
-            try {
-                URL url = new URL("https://cdn.discordapp.com/attachments/946210413849239603/964756428067856394/test-file.txt");
-                connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-
-                InputStream stream = connection.getInputStream();
-                StringBuffer buffer = new StringBuffer();
-
-                reader = new BufferedReader(new InputStreamReader(stream));
-                String line = "";
-                while ((line = reader.readLine()) != null) {
-                    buffer.append(line);
-                }
-
-                String finalJson = buffer.toString();
-
-                JSONObject parentObject = new JSONObject(finalJson);
-                JSONArray finalObject = parentObject.getJSONArray("states");
-
-                for (int i = 0; i < finalObject.length(); i++) {
-                    JSONObject obj = finalObject.getJSONObject(i);
-                    stateList.add(obj.getString("state"));
-                    JSONObject r = obj.getJSONObject("recipes");
-                    recipeList.add(r.getString("recipe"));
-                    ingredientsList.add(r.getString("ingredients"));
-                    ratingList.add(r.getString("rating"));
-
-                }
-
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
-            } finally {
-                if (connection != null) {
-                    connection.disconnect();
-                }
-            }
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        protected void onPostExecute(String result){
-
-        }
     }
 
     @Override
