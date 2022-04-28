@@ -16,7 +16,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.ResultReceiver;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,16 +43,23 @@ import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
+
     ArrayList<String> stateList = new ArrayList<String>();
     ArrayList<String> recipeList = new ArrayList<String>();
     ArrayList<String> realRecipeList = new ArrayList<String>();
     ArrayList<String> ingredientsList = new ArrayList<String>();
     ArrayList<String> ratingList = new ArrayList<String>();
+    ArrayList<String> spinnerList = new ArrayList<String>();
+
 
     private String savedLocation = null;
     private TextView textAddress, textLatLong;
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
     private ResultReceiver resultReceiver;
+    public static int INDEX = 0;
+    public StringBuilder selection = null;
+    private int locationID = -1;
+
 
 
     @Override
@@ -59,13 +68,35 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Spinner spinner = (Spinner) findViewById(R.id.state_dropdown);
-        new JSONTask().execute("https://cdn.discordapp.com/attachments/946210413849239603/964756428067856394/test-file.txt");
+        new JSONTask().execute("https://cdn.discordapp.com/attachments/946210413849239603/968960177250386001/test-file.txt");
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,
                         stateList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);
 
+        Button stateSelect = (Button) findViewById(R.id.button);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                String selectedItem = adapter.getItem(position);
+                selectedItem = String.valueOf(selection);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        stateSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Toast.makeText(getBaseContext(), stateList.get(0), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         resultReceiver = new AddressResultReceiver(new Handler());
 
@@ -102,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
             BufferedReader reader = null;
 
             try {
-                URL url = new URL("https://cdn.discordapp.com/attachments/946210413849239603/964756428067856394/test-file.txt");
+                URL url = new URL("https://cdn.discordapp.com/attachments/946210413849239603/968960177250386001/test-file.txt");
                 connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
 
@@ -129,7 +160,6 @@ public class MainActivity extends AppCompatActivity {
                     ratingList.add(r.getString("rating"));
 
                 }
-
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -222,18 +252,35 @@ public class MainActivity extends AppCompatActivity {
         //This takes the results from getAddressService and the result code and hands them  off.
         //If the result code show that it was successful then save the data to location string.
         //Else prompts a message to user.
+
+        private int compareResults(String result, ArrayList stateList){
+
+            int ID = 0;
+
+            for(int i = 0; i < stateList.size(); i++){
+
+                boolean answer = savedLocation.equals(stateList.get(i));
+                if (answer == true){
+                    ID = i;
+                    return ID;
+                }
+            }
+            return ID;
+        }
+
         @Override
         protected void onReceiveResult(int resultCode, Bundle resultData) {
+
             super.onReceiveResult(resultCode, resultData);
-            if(resultCode == Constants.SUCESS_RESULT){
+            if (resultCode == Constants.SUCESS_RESULT) {
                 textAddress.setText(resultData.getString(Constants.RESULT_KEY));
                 savedLocation = resultData.getString(Constants.RESULT_KEY);
-            }else{
+                locationID = compareResults(savedLocation, stateList);
+                textLatLong.setText(String.valueOf(locationID));
+
+            } else {
                 Toast.makeText(MainActivity.this, resultData.getString(Constants.RESULT_KEY), Toast.LENGTH_SHORT).show();
             }
-
         }
-    }
-
-
+        }
 }
