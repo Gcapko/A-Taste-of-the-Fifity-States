@@ -36,13 +36,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Serializable {
 
     ArrayList<String> stateList = new ArrayList<String>();
     ArrayList<String> recipeList = new ArrayList<String>();
@@ -59,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
     public static int INDEX = 0;
     public StringBuilder selection = null;
     private int locationID = -1;
-
 
 
     @Override
@@ -93,8 +93,11 @@ public class MainActivity extends AppCompatActivity {
         stateSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), RecipeListActivity.class);
+                intent.putExtra("states", stateList);
+                view.getContext().startActivity(intent);
 
-                Toast.makeText(getBaseContext(), stateList.get(0), Toast.LENGTH_SHORT).show();
+
             }
         });
 
