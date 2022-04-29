@@ -19,7 +19,7 @@ public class SplashscreenActivity extends AppCompatActivity {
                 startActivity(intent);
 
             }
-        }, 2000); // 5 seconds
+        }, 500); // 5 seconds
 
     }
 }
