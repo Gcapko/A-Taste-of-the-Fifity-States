@@ -33,6 +33,8 @@ public class RecipeListActivity extends AppCompatActivity implements Serializabl
         ArrayAdapter statesArray = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
                 statesArrayList);
 
+
+
         ListView listView = findViewById(R.id.textview);
         listView.setClickable(true);
         listView.setAdapter(statesArray);

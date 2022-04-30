@@ -50,11 +50,9 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     ArrayList<String> realRecipeList = new ArrayList<String>();
     ArrayList<String> ingredientsList = new ArrayList<String>();
     ArrayList<String> ratingList = new ArrayList<String>();
-    ArrayList<String> spinnerList = new ArrayList<String>();
 
 
     private String savedLocation = null;
-    private TextView textAddress, textLatLong;
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
     private ResultReceiver resultReceiver;
     public static int INDEX = 0;
@@ -67,28 +65,12 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Spinner spinner = (Spinner) findViewById(R.id.state_dropdown);
         new JSONTask().execute("https://cdn.discordapp.com/attachments/946210413849239603/968960177250386001/test-file.txt");
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,
                         stateList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spinner.setAdapter(adapter);
 
         Button stateSelect = (Button) findViewById(R.id.button);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                String selectedItem = adapter.getItem(position);
-                selectedItem = String.valueOf(selection);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
 
         stateSelect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,10 +85,6 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         });
 
         resultReceiver = new AddressResultReceiver(new Handler());
-
-        //initialized textviews
-        textLatLong = findViewById(R.id.textLatLong);
-        textAddress = findViewById(R.id.textAddress);
 
         //initialized button button click
         findViewById(R.id.buttonGetCurrentLocation).setOnClickListener(new View.OnClickListener() {
@@ -277,10 +255,21 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
             super.onReceiveResult(resultCode, resultData);
             if (resultCode == Constants.SUCESS_RESULT) {
-                textAddress.setText(resultData.getString(Constants.RESULT_KEY));
                 savedLocation = resultData.getString(Constants.RESULT_KEY);
+                //Uncomment this out if you are unable to change you emulator to Florida
+                //savedLocation = "Florida";
                 locationID = compareResults(savedLocation, stateList);
-                textLatLong.setText(String.valueOf(locationID));
+
+                Integer stateIndex = locationID;
+                Intent intent = new Intent(MainActivity.this, actualRecipeList.class);
+                ArrayList<String> chosenFood = new ArrayList<>();
+                ArrayList<String> chosenIngredient = new ArrayList<>();
+                chosenFood.add(recipeList.get(locationID));
+                chosenIngredient.add(ingredientsList.get(locationID));
+                intent.putExtra("food", chosenFood);
+                intent.putExtra("ingredients", chosenIngredient);
+                intent.putExtra("number", locationID);
+                MainActivity.this.startActivity(intent);
 
             } else {
                 Toast.makeText(MainActivity.this, resultData.getString(Constants.RESULT_KEY), Toast.LENGTH_SHORT).show();
