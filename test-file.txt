@@ -1,0 +1,110 @@
+{
+    "states" : [
+    {
+        "state": "Florida",
+        "recipes": {
+            "recipe" : "Florida Fried Gator Bites",
+                "ingredients" : "bro are you insane?!?!",
+                    "rating" : "4"
+            }
+        },
+        {
+        "state": "Georgia",
+        "recipes": {
+            "recipe" : "peach",
+                "ingredients" : "georgian peech",
+                    "rating" : "4"
+            }
+        },
+        {
+        "state": "Texas",
+        "recipes": {
+            "recipe" : "Armadillo",
+                "ingredients" : "texan armadillo",
+                    "rating" : "3"
+            }
+        },
+        {
+        "state": "New York",
+        "recipes": {
+            "recipe" : "New yawk pizza",
+                "ingredients" : "i cooka da pizza",
+                    "rating" : "3"
+            }
+        },
+ 	{
+        "state": "California",
+        "recipes": {
+            "recipe" : "Californian vegan stuff",
+                "ingredients" : "Vegetables or something",
+                    "rating" : "3"
+            }
+        },
+        {
+        "state": "North Carolina",
+        "recipes": {
+            "recipe" : "a pie of some sort",
+                "ingredients" : "idk bro",
+                    "rating" : "3"
+            }
+        },
+                {
+        "state": "South Carolina",
+        "recipes": {
+            "recipe" : "South Carolina's boyaled peanuts",
+                "ingredients" : "south carolina, are you trying?",
+                    "rating" : "3"
+            }
+        },
+        {
+        "state": "Alabama",
+        "recipes": {
+            "recipe" : "Alabama pecan pie",
+            "ingredients" : "pecans + pie. i never cooked a pie in my life, so just go to publix maybe",
+            "rating" : "3"
+    }
+        },
+        {
+            "state": "Virginia",
+            "recipes": {
+                "recipe" : "virginian roasted peanuts",
+                "ingredients" : "go to sams club dude",
+                "rating" : "3"
+        }
+            },
+            {
+                "state": "Ohio",
+                "recipes": {
+                    "recipe" : "Ohio sirracha and broken glass",
+                    "ingredients" : "you aint from dayton if u neva had this!",
+                    "rating" : "3"
+            }
+                },
+                {
+                    "state": "Pennsylvania",
+                    "recipes": {
+                        "recipe" : "hersheys from penn state",
+                        "ingredients" : "why do i have to go to pennsylvania for hersheys? i can just go to the gas station",
+                        "rating" : "3"
+                }
+                    },
+                    {
+                        "state": "Mississippi",
+                        "recipes": {
+                            "recipe" : "mississippi blue crab",
+                            "ingredients" : "blue marker and a crab of your choice. bone app the teef",
+                            "rating" : "3"
+                    }
+                        },
+                        {
+                            "state": "Kentucky",
+                            "recipes": {
+                                "recipe" : "Kentucky Mug Root Beer and Listerine floats",
+                                "ingredients" : "",
+                                "rating" : "3"
+                        }
+                            }
+    
+        
+    ]
+ }
