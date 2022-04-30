@@ -63,9 +63,10 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        // we just made a few states to prove that everything works,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        new JSONTask().execute("https://cdn.discordapp.com/attachments/946210413849239603/968960177250386001/test-file.txt");
+        new JSONTask().execute("https://cdn.discordapp.com/attachments/946210413849239603/969782607137108028/test-file.txt");
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,
                         stateList);
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
             BufferedReader reader = null;
 
             try {
-                URL url = new URL("https://cdn.discordapp.com/attachments/946210413849239603/968960177250386001/test-file.txt");
+                URL url = new URL("https://cdn.discordapp.com/attachments/946210413849239603/969782607137108028/test-file.txt");
                 connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
 
