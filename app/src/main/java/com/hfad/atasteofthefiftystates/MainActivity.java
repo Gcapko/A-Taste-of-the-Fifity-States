@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         // we just made a few states to prove that everything works and everything can be retrieved via a webservice
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // this is the location of the JSON file that has all the recipes, states and ingredients
         new JSONTask().execute("https://raw.githubusercontent.com/Gcapko/A-Taste-of-the-Fifity-States/master/test-file.txt");
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,
@@ -73,10 +74,12 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
         Button stateSelect = (Button) findViewById(R.id.button);
 
+        // this button takes you to an intent that has a bunch of states on it
         stateSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), RecipeListActivity.class);
+                // all of the things are passed through into another activity
                 intent.putExtra("states", stateList);
                 intent.putExtra("food", recipeList);
                 intent.putExtra("ingredients", ingredientsList);
@@ -108,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         });
     }
 
+    // the webservice class
     public class JSONTask extends AsyncTask<String, String, Integer> {
 
         @Override
@@ -134,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
                 JSONObject parentObject = new JSONObject(finalJson);
                 JSONArray finalObject = parentObject.getJSONArray("states");
 
+                // this reads through the JSON file and adds everything into an arraylist for later usage
                 for (int i = 0; i < finalObject.length(); i++) {
                     JSONObject obj = finalObject.getJSONObject(i);
                     stateList.add(obj.getString("state"));

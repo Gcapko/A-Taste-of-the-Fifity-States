@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 public class actualRecipeList extends AppCompatActivity implements Serializable {
 
+    // two arraylists initialized
     ArrayList<String> chosenFood = new ArrayList<String>();
     ArrayList<String> chosenIngredient = new ArrayList<String>();
 
@@ -23,6 +24,7 @@ public class actualRecipeList extends AppCompatActivity implements Serializable 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actual_recipe_list);
 
+        // we fill each array list with a single value, the chosen food & ingredent each
         chosenFood = (ArrayList<String>) getIntent().getSerializableExtra("food");
         chosenIngredient = (ArrayList<String>) getIntent().getSerializableExtra("ingredients");
         INDEX = (Integer) getIntent().getSerializableExtra("number");
